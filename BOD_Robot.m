@@ -6,7 +6,7 @@ function BOD_Robot()
 t = [];
 % u will be our parameter
 syms t;
-alpha_num = 0.3;
+alpha_num = 0.5;
 d = 0.235;
 assume(t,{'real','positive'});
 
@@ -46,24 +46,26 @@ pause(2);
 % Place the Neato in the specified x, y position and specified heading vector.
 
 start = rostime('now');
-current = 0;
+current = rostime('now');
+
+dt = current-start;
 
 %t_array = linspace(0,(3.2/0.3),100);
 
-while current < (3.2/0.3)  %while time for robot is less than predicted time it will take to cross bridge
+while dt.seconds < (3.2/0.5)  %while time for robot is less than predicted time it will take to cross bridge
     current = rostime('now');
     dt = current - start;
     
-    R_dt = double(subs(R,t,dt));
-    v_dt = double(subs(v,t,dt));
-    That_dt = double(subs(That,t,dt));
-    dThat_dt = double(subs(dThat,t,dt));
-    w_dt = double(subs(w,t,dt));
-    VL_dt = double(subs(VL,t,dt));
-    VR_dt = double(subs(VR,t,dt));
-    
-    stopMsg.Data = [VL_dt,VR_dt];
-    send(pub, stopMsg);
+%     R_dt = double(subs(R,t,dt.seconds));
+%     v_dt = double(subs(v,t,dt.seconds));
+%     That_dt = double(subs(That,t,dt.seconds));
+%     dThat_dt = double(subs(dThat,t,dt.seconds));
+%     w_dt = double(subs(w,t,dt.seconds));
+    VL_dt = double(subs(VL,t,dt.seconds));
+    VR_dt = double(subs(VR,t,dt.seconds));
+    drive = rosmessage(pub);
+    drive.Data = [VL_dt,VR_dt];
+    send(pub, drive);
 end
 
 function placeNeato(posX, posY, headingX, headingY)
