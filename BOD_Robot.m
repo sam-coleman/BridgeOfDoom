@@ -1,5 +1,6 @@
 function BOD_Robot()
 % Insert any setup code you want to run here
+
 % define u explicitly to avoid error when using sub functions
 % see: https://www.mathworks.com/matlabcentral/answers/268580-error-attempt-to-add-variable-to-a-static-workspace-when-it-is-not-in-workspace
 t = [];
@@ -50,15 +51,10 @@ current = rostime('now');
 dt = current-start;
 
 %t_array = linspace(0,(3.2/0.3),100);
-<<<<<<< HEAD
-dt.seconds = 0;
-while dt.seconds < (3.2/0.3)  %while time for robot is less than predicted time it will take to cross bridge
-=======
 
-while dt.seconds < (3.2/0.5)  %while time for robot is less than predicted time it will take to cross bridge
->>>>>>> 8290c9c223078335f05e6725282403b37df61ac0
+while dt.seconds < (3.2/alpha_num)  %while time for robot is less than predicted time it will take to cross bridge
     current = rostime('now');
-    dt.seconds = current - start;
+    dt = current - start;
     
 %     R_dt = double(subs(R,t,dt.seconds));
 %     v_dt = double(subs(v,t,dt.seconds));
@@ -67,15 +63,9 @@ while dt.seconds < (3.2/0.5)  %while time for robot is less than predicted time 
 %     w_dt = double(subs(w,t,dt.seconds));
     VL_dt = double(subs(VL,t,dt.seconds));
     VR_dt = double(subs(VR,t,dt.seconds));
-<<<<<<< HEAD
-    
-    stopMsg.Data = [VL_dt,VR_dt];
-    send(pub, stopMsg);
-=======
     drive = rosmessage(pub);
     drive.Data = [VL_dt,VR_dt];
     send(pub, drive);
->>>>>>> 8290c9c223078335f05e6725282403b37df61ac0
 end
 
 function placeNeato(posX, posY, headingX, headingY)
