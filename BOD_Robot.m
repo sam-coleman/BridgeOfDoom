@@ -1,6 +1,5 @@
 function BOD_Robot()
 % Insert any setup code you want to run here
-
 % define u explicitly to avoid error when using sub functions
 % see: https://www.mathworks.com/matlabcentral/answers/268580-error-attempt-to-add-variable-to-a-static-workspace-when-it-is-not-in-workspace
 t = [];
@@ -49,18 +48,18 @@ start = rostime('now');
 current = 0;
 
 %t_array = linspace(0,(3.2/0.3),100);
-
-while current < (3.2/0.3)  %while time for robot is less than predicted time it will take to cross bridge
+dt.seconds = 0;
+while dt.seconds < (3.2/0.3)  %while time for robot is less than predicted time it will take to cross bridge
     current = rostime('now');
-    dt = current - start;
+    dt.seconds = current - start;
     
-    R_dt = double(subs(R,t,dt));
-    v_dt = double(subs(v,t,dt));
-    That_dt = double(subs(That,t,dt));
-    dThat_dt = double(subs(dThat,t,dt));
-    w_dt = double(subs(w,t,dt));
-    VL_dt = double(subs(VL,t,dt));
-    VR_dt = double(subs(VR,t,dt));
+%     R_dt = double(subs(R,t,dt.seconds));
+%     v_dt = double(subs(v,t,dt.seconds));
+%     That_dt = double(subs(That,t,dt.seconds));
+%     dThat_dt = double(subs(dThat,t,dt.seconds));
+%     w_dt = double(subs(w,t,dt.seconds));
+    VL_dt = double(subs(VL,t,dt.seconds));
+    VR_dt = double(subs(VR,t,dt.seconds));
     
     stopMsg.Data = [VL_dt,VR_dt];
     send(pub, stopMsg);
