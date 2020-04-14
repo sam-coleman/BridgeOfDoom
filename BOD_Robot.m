@@ -6,7 +6,7 @@ function BOD_Robot()
 t = [];
 % u will be our parameter
 syms t;
-alpha_num = 0.5;
+alpha_num = 0.3;
 d = 0.235;
 assume(t,{'real','positive'});
 
@@ -52,7 +52,7 @@ dt = current-start;
 
 %t_array = linspace(0,(3.2/0.3),100);
 
-while dt.seconds < (3.2/alpha_num)  %while time for robot is less than predicted time it will take to cross bridge
+while dt.seconds < (3.2/alpha_num) - .5  %while time for robot is less than predicted time it will take to cross bridge
     current = rostime('now');
     dt = current - start;
     
@@ -67,7 +67,9 @@ while dt.seconds < (3.2/alpha_num)  %while time for robot is less than predicted
     drive.Data = [VL_dt,VR_dt];
     send(pub, drive);
 end
-
+disp('finished loop')
+drive.Data = [0, 0];
+send(pub, drive);
 function placeNeato(posX, posY, headingX, headingY)
     svc = rossvcclient('gazebo/set_model_state');
     msg = rosmessage(svc);
