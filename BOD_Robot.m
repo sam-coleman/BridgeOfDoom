@@ -66,7 +66,7 @@ while dt.seconds < (3.2/alpha_num) - .5  %while time for robot is less than pred
     drive = rosmessage(pub);
     drive.Data = [VL_dt,VR_dt];
     send(pub, drive);
-    pause(0.05)
+    pause(0.1)
 end
 disp('finished loop')
 drive.Data = [0, 0];
