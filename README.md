@@ -1,7 +1,7 @@
 # BridgeOfDoom
-Olin College of Engineering
-QEA Spring 2020 Bridge of Doom Assignment 
-Contributors: Sam Coleman, Ruby Eisenbud, Rishita Sarin
+Olin College of Engineering   
+QEA Spring 2020 Bridge of Doom Assignment    
+Contributors: Sam Coleman, Ruby Eisenbud, Rishita Sarin   
 
 ## Files and Resources
 * BOD_Robot.m is function for simulated Neato to traverse Bridge of Doom
